@@ -616,7 +616,11 @@ class interp1d(_Interpolator1D):
         #    would be inserted.
         #    Note: use side='left' (right) to searchsorted() to define the
         #    halfway point to be nearest to the left (right) neighbor
-        x_new_indices = searchsorted(self.x_bds, x_new, side='left')
+
+        # CHANGE MADE BY DANIEL ROJAS 
+        # Reason: To make nearest neighbor act like Matlab's implementation
+        # change: side='left' ==> side='right'
+        x_new_indices = searchsorted(self.x_bds, x_new, side='right')
 
         # 3. Clip x_new_indices so that they are within the range of x indices.
         x_new_indices = x_new_indices.clip(0, len(self.x)-1).astype(intp)
